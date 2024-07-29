@@ -1,8 +1,8 @@
 import React from 'react'
 import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom';
-import UserSlider from './UserSlider';
-import './Chat.css'
+import UsersSlider from './UsersSlider';
+
 
 function Chat() {
     const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -53,7 +53,7 @@ function Chat() {
     return (
         <div className="chat-page">
             <h1>Chat</h1>
-            
+            <UsersSlider />
         </div>
     )
 }
