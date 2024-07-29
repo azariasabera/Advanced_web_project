@@ -1,0 +1,32 @@
+.dropdown-content li a {
+    color: hsl(330, 84%, 50%);
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+    transition: background-color 0.3s;
+}
+
+.dropdown-content a:hover {
+    background-color: hsl(330, 84%, 50%);
+    color : white;
+    border-radius: 10px;
+}
+
+
+.dropdown-trigger {
+    color: hsl(330, 84%, 50%);
+    width: 150px;
+    display: flex;
+    align-items: center; 
+}
+
+.dropdown-trigger .material-icons {
+    margin-left: 5px;       /* Adjust the space between text and icon */
+    font-size: 24px;        /* Ensure the icon size matches your design */
+}
+
+li Link {
+    color: hsl(330, 84%, 50%);
+    text-decoration: none;
+    font-size: 80%;
+}

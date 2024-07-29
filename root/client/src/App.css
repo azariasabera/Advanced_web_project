@@ -1,5 +1,16 @@
 .App {
-  text-align: center;
+  background-color: #282c34;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+  background-image: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.8)), url('../public/home.jpg');
+  background-size: cover;
+  background-position: center; 
+  background-attachment: relative; 
 }
 
 .App-logo {
@@ -22,6 +33,10 @@
   justify-content: center;
   font-size: calc(10px + 2vmin);
   color: white;
+  background-image: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.8)), url('../public/home.jpg');
+  background-size: cover;
+  background-position: center; 
+  background-attachment: relative; 
 }
 
 .App-link {
@@ -36,3 +51,44 @@
     transform: rotate(360deg);
   }
 }
+
+.content {
+  text-align: center;
+  margin: 0px 20px 0px 20px; /* Top, right, bottom, left */
+}
+
+.content h1 {
+  font-size: 3em;
+  color: hsl(330, 84%, 50%); /* Pinkish color */
+}
+
+.content p {
+  font-style: italic;
+  font-size: 1.2em;
+  color: #555; /* Slightly dark gray for styling */
+}
+
+#navigateDiv {
+  display: flex;
+  justify-content: center;
+  gap: 10px; /* Space between buttons */
+  margin-top: 20px;
+}
+
+#navigateDiv button {
+  background-color: transparent;
+  border: 2px solid hsl(330, 84%, 50%); /* Pinkish border */
+  color: hsl(330, 84%, 50%); /* Pinkish text color */
+  padding: 10px 20px;
+  font-size: 1em;
+  cursor: pointer;
+  transition: background-color 0.3s, color 0.3s;
+  border-radius: 20px;
+}
+
+#navigateDiv button:hover {
+  background-color: hsl(330, 84%, 50%); /* Pinkish background on hover */
+  color: #fff; /* White text on hover */
+}
+
+

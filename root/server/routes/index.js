@@ -21,9 +21,6 @@ router.get('/', function(req, res, next) {
   res.render('index', { title: 'Express' });
 });
 
-// GET ROUTES
-
-
 // POST ROUTES
 
 router.post('/api/user/register', 
@@ -39,6 +36,7 @@ router.post('/api/user/register',
   ,(req, res, next)=>{  
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
+        console.log(req.body.password);
         return res.status(400).send('Password is not strong enough');
     }
     Users.findOne({email: req.body.email})
@@ -48,10 +46,11 @@ router.post('/api/user/register',
                 let newUser = new Users({
                     name: req.body.name,
                     email: req.body.email,
-                    password: hashedPassword
+                    password: hashedPassword,
+                    date: new Date()
                 });
                 newUser.save();
-                return res.send('User registered');
+                return res.send(newUser);
                 //res.redirect('/login.html');
             } else {
                 return res.status(403).send('Email already in use');
@@ -107,6 +106,30 @@ router.post('/api/user/login',
     ).catch((error) => {
         res.status(500).send(`Error in .findOne: ${error}`);
     });
+});
+
+// GET ROUTES
+
+router.get('/api/user/check-auth', 
+  passport.authenticate('jwt', { session: false }),
+  (req, res)=>{
+
+    if(req.user){
+      res.json({isAuthenticated: true});
+    }
+    else{
+      res.status(403).json({isAuthenticated: false});
+    }
+});
+
+router.get('/api/all-users',
+  passport.authenticate('jwt', { session: false }), 
+  async (req, res)=>{
+  let users = await Users.find();
+
+  // I will return all the users except the one who is logged in
+  let restOfUsers = users.filter(user => user.email !== req.user); 
+  res.json(restOfUsers);
 });
 
 module.exports = router;

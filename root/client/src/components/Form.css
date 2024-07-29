@@ -1,0 +1,49 @@
+input {
+    color: white;
+}
+
+h2 {
+    color: hsl(330, 84%, 50%);
+}
+
+button {
+    background-color: transparent;
+    border: 2px solid hsl(330, 84%, 50%); /* Pinkish border */
+    color: hsl(330, 84%, 50%); /* Pinkish text color */
+    padding: 10px 20px;
+    font-size: 1em;
+    cursor: pointer;
+    transition: background-color 0.3s, color 0.3s;
+    border-radius: 20px;
+    margin-top: 3%;
+}
+
+button:hover {
+    background-color: hsl(330, 84%, 50%); /* Pinkish background on hover */
+    color: #fff; /* White text on hover */
+}
+
+/* Style the text of links */
+a {
+    color: hsl(330, 84%, 50%);
+    text-decoration: none;
+    font-size: 80%;
+}
+
+label {
+    color: hsl(330, 84%, 50%);
+}
+
+.checkbox-container {
+    display: flex;
+    align-items: center;
+  }
+
+.errorMessage {
+    color: red;
+    font-size: 60%;
+    margin-top: 1%;
+    margin-bottom: 4%;
+}
+
+
