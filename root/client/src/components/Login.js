@@ -54,7 +54,7 @@ function Login() {
             alert('Token not found');
 
         // Redirecting to the chat page
-        navigate('/chat');
+        navigate('/suggestions');
 
     } else {
       console.error('Error:', response);

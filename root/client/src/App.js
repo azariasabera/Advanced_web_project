@@ -8,6 +8,7 @@ import Header from './components/Header';
 import Chat from './components/Chat';
 import Profile from './components/Profile';
 import AddImage from './components/AddImage';
+import Suggestions from './components/Suggestions';
 
   function App() {
     const { t , i18n } = useTranslation();
@@ -41,6 +42,7 @@ import AddImage from './components/AddImage';
             <Route path="/forgot-password" element={<div className='App-sub'><ResetPassword /></div>} />
             <Route path="/profile" element={<div className='App-sub'><Profile /></div>} />
             <Route path="/add-image" element={<div className='App-sub'><AddImage /></div>} />
+            <Route path="/suggestions" element={<div className='App-chat'><Suggestions /></div>} />
             <Route path="*" element={<h1>404: This is not the webpage you are looking for</h1>} />
           </Routes>
         

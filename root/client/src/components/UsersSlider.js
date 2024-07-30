@@ -37,21 +37,21 @@ function UsersSlider({ users }) {
             {users.map((user, index) => (
               <div className="slider-item" key={user.email}>
                 <div className="card-image">
-                  <img src={user.image} alt={user.email} />
+                  <img src={'noProfile.png'} alt={user.email} />
                 </div>
                 <p className="personName" style={{ color: 'hsl(330, 84%, 50%)' }}>{user.name}</p>
                 <div className="card-content">
                   <h1 className="card-title">{user.title}</h1>
                   <p className={`card-text ${expanded === index ? 'expanded' : ''}`}>{user.detail}</p>
                   <a
-                    className={`btn-floating halfway-fab waves-effect waves-light black ${liked ? 'liked' : ''}`}
+                    className={`btn-floating halfway-fab waves-effect waves-light red ${liked ? 'liked' : ''}`}
                     onClick={toggleLike}
                   >
                     <i className="material-icons">favorite</i>
                   </a>
-                  <button onClick={() => toggleExpand(index)}>
-                    {expanded === index ? 'Show Less' : 'Show More'}
-                  </button>
+                  <p onClick={() => toggleExpand(index)} className='expand'>
+                    expand
+                  </p>
                 </div>
               </div>
             ))}
@@ -68,8 +68,8 @@ function UsersSlider({ users }) {
             </div>
             <p className="personName">{users[expanded].name}</p>
             <div className="card-content">
-              <h1 className="card-title">{users[expanded].title}</h1>
-              <p className="card-text">{users[expanded].detail}</p>
+              <h1 className="card-title-expand">{users[expanded].title}</h1>
+              <p className="card-text-expand">{users[expanded].detail}</p>
             </div>
           </div>
         </>
