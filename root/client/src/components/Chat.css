@@ -157,15 +157,15 @@
 
 .message {
     max-width: 70%; /* Ensure the message doesn’t take up too much space */
-    padding: 10px;
+    padding: 0 10px; /* Add padding to the left and right */
     border-radius: 20px;
-    margin-bottom: 10px; /* Space between messages */
     word-wrap: break-word; /* Ensure long words wrap correctly */
     display: inline-block; /* Ensures width fits content */
 }
 
 .message.sent {
-    color: hsl(330, 84%, 50%);
+    background-color: hsl(330, 84%, 50%);
+    color: white;
     align-self: flex-end; /* Align sent messages to the right */
 }
 
@@ -173,4 +173,48 @@
     background-color: #f1f0f0;
     color: hsl(330, 84%, 50%);
     align-self: flex-start; /* Align received messages to the left */
+}
+
+.dropdown-list {
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    background: rgb(152, 29, 29);
+    border: 1px solid #ccc;
+    width: 200px;
+    margin-left: 15%;
+    max-height: 400px;
+    overflow-y: auto;
+    z-index: 10;
+}
+
+.dropdown-item {
+    padding: 10px;
+    cursor: pointer;
+}
+
+.dropdown-item:hover {
+    background: #f1f1f1;
+}
+
+@media screen and (max-width: 600px) {
+    .chat-container {
+        flex-direction: column;
+    }
+
+    .chat-sidebar {
+        flex: 1;
+        border-right: none;
+        border-bottom: 2px solid #ffc0cb;
+    }
+
+    .chat-main {
+        flex: 1;
+    }
+
+    .dropdown-list {
+        width: 150px;
+        margin-top: 50px;
+        margin-left: 0;
+    }
 }

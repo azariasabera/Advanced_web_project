@@ -246,7 +246,7 @@ router.get('/api/user/image',
       res.send(image.buffer);
     }
     else{
-      res.status(404).json({msg: err});
+      res.status(404).json({msg: 'Image not found'});
     }
 });
 
