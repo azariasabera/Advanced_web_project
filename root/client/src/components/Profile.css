@@ -1,0 +1,47 @@
+.container {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 20px;
+    text-align: center;
+    background-color: #131313;
+  }
+  
+  .container img {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-bottom: 20px;
+    border: 2px solid #f02260;
+  }
+  
+  .container h2, h3 {
+    font-family: 'Arial', sans-serif;
+    margin-bottom: 10px;
+    color: hsl(330, 84%, 50%);
+  }
+  
+  .container p {
+    font-family: 'Arial', sans-serif;
+    color: #ffffff;
+    margin: 5px 0;
+    line-height: 1.5;
+  }  
+ 
+  .container form input[type="text"] {
+    width: 100%;
+    padding: 10px;
+    margin: 10px 0;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+  }
+  
+  .container form button {
+    width: 100%;
+  }
+  
+  .links a:hover {
+    color: #ffffff;
+  }
+  

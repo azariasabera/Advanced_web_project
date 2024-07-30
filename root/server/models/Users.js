@@ -18,7 +18,7 @@ const UsersSchema = new Schema({
     },
 
     title : { type: String, default: "Title" },
-    detail: { type: String, default: "Nothing added yet" },
+    detail: { type: String, default: "Nothing added yet" }
 
 });
 module.exports = mongoose.model("Users", UsersSchema);

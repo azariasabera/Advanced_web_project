@@ -14,11 +14,11 @@ import AddImage from './components/AddImage';
     return (
       <Router>
         <Header />
-        <div className="App">
+        
         
           <Routes>
             <Route path="/" element={
-              <>
+              <div className="App">
                     <div className="content">
                         <h1>{t('Welcome')}</h1>
                         <p> {t('Moto')}</p>
@@ -32,17 +32,18 @@ import AddImage from './components/AddImage';
                         <button type="button" id="register">{t('Register')}</button>
                       </Link>
                     </div>
-              </>
+                  </div>
             } />
-            <Route path="/login" element={<Login />} />
-            <Route path="/register" element={<Register />} />
-            <Route path="/chat" element={<Chat />} />
-            <Route path="/forgot-password" element={<ResetPassword />} />
-            <Route path="/profile" element={<Profile />} />
-            <Route path="/add-image" element={<AddImage />} />
+
+            <Route path="/login" element={<div className='App-sub'><Login /></div>} />
+            <Route path="/register" element={<div className='App-sub'><Register /></div>} />
+            <Route path="/chat" element={<div className='App-chat'><Chat /></div>} />
+            <Route path="/forgot-password" element={<div className='App-sub'><ResetPassword /></div>} />
+            <Route path="/profile" element={<div className='App-sub'><Profile /></div>} />
+            <Route path="/add-image" element={<div className='App-sub'><AddImage /></div>} />
             <Route path="*" element={<h1>404: This is not the webpage you are looking for</h1>} />
           </Routes>
-        </div>
+        
       </Router>
     );
   }

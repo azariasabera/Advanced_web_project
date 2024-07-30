@@ -1,61 +1,63 @@
-import React from 'react'
-import { useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import UsersSlider from './UsersSlider';
-
+import UsersSlider from './UsersSlider'; // Assuming you have this component
 
 function Chat() {
-    const [isAuthenticated, setIsAuthenticated] = useState(false);
-    const [users, setUsers] = useState([]);
-    const navigate = useNavigate();
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [user, setUser] = useState({});
+  const [users, setUsers] = useState([]);
+  const navigate = useNavigate();
 
-    useEffect(() => {
-        const checkAuth = async () => {
-            if (localStorage.getItem('auth_token')) {
-                const response = await fetch('/api/user/check-auth',
-                    {
-                        method: 'GET',
-                        headers: { 
-                            'Authorization': `Bearer ${localStorage.getItem('auth_token')}`
-                        }
-                    });
-                const data = await response.json();
-                if (data.isAuthenticated) 
-                    setIsAuthenticated(true);
-                else 
-                    navigate('/login');
-            }
-            else 
-                navigate('/login');
+  useEffect(() => {
+    const checkAuth = async () => {
+      if (localStorage.getItem('auth_token')) {
+        const response = await fetch('/api/user', {
+          method: 'GET',
+          headers: { 
+            'Authorization': `Bearer ${localStorage.getItem('auth_token')}`
+          }
+        });
+        const data = await response.json();
+        setUser(data);
+        if (response.ok) {
+          setIsAuthenticated(true);
+        } else {
+          navigate('/login');
         }
-        checkAuth();
-    }
-    , [navigate]);
+      } else {
+        navigate('/login');
+      }
+    };
+    checkAuth();
+  }, [navigate]);
 
-    useEffect(() => {
-        const fetchUsers = async () => {
-            const response = await fetch('/api/all-users', {
-                method: 'GET',
-                headers: {
-                    'Authorization': `Bearer ${localStorage.getItem('auth_token')}`
-                }
-            });
-            const data = await response.json();
-            setUsers(data.users);
-        };
+  useEffect(() => {
+    const fetchUsers = async () => {
+      if (isAuthenticated) {
+        const response = await fetch('/api/all-users', {
+          method: 'GET',
+          headers: {
+            'Authorization': `Bearer ${localStorage.getItem('auth_token')}`
+          }
+        });
+        const data = await response.json();
+        setUsers(data.filter(u => u.email !== user.email));
+        console.log('Fetched users:', data);
+      }
+    };
 
-        if (isAuthenticated) {
-            fetchUsers();
-        }
-    }, [isAuthenticated]);
+    fetchUsers();
+  }, [isAuthenticated, user.email]);
 
-
-    return (
-        <div className="chat-page">
-            <h1>Chat</h1>
-            <UsersSlider />
-        </div>
-    )
+  return (
+    <>
+    { isAuthenticated && users.length !== 0 && (
+    <div className="chat-page">
+        <UsersSlider users={users} />
+    </div>
+    )}
+    </>
+  );
 }
 
-export default Chat
+export default Chat;

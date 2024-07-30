@@ -14,10 +14,17 @@
 
 
 .dropdown-trigger {
+
+    background-color: white;
     color: hsl(330, 84%, 50%);
     width: 150px;
     display: flex;
     align-items: center; 
+}
+
+.dropdown-trigger:hover {
+    background-color: hsl(330, 84%, 50%);
+    color: white;
 }
 
 .dropdown-trigger .material-icons {
