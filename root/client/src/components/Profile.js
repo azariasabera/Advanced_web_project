@@ -39,12 +39,14 @@ function Profile() {
                     "Authorization": `Bearer ${localStorage.getItem('auth_token')}`
                 }
             });
+            console.log(response.ok);
             const data = await response.blob();
             if (response.ok)
                 setImgUrl(URL.createObjectURL(data));
-            else
-                if (response.status === 401) navigate('/login');
-                setImgUrl('noProfile.png');
+            else{
+                if (response.status === 401) 
+                    navigate('/login');
+                setImgUrl('noProfile.png');}
 
         }
         getProfilePicture();

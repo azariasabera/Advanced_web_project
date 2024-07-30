@@ -66,20 +66,21 @@ const toggleLike = async (email) => {
     setExpanded(null);
   };
 
+  const checkUsers = (users) => {
+    if (users.length === 1) 
+      return [...users, ...users];
+    return users;
+  }
+
   const settings = {
     dots: true,
     infinite: true,
     speed: 500,
     slidesToShow: users.length === 1 ? 1 : 2,
     slidesToScroll: 1,
-    responsive: [
-        {
-            breakpoint: 768,
-            settings: {
-                slidesToShow: 1,
-            }
-        }
-    ]
+    // if there is only one user, duplicate the user to show 2 cards:
+    // it is implemented like this:
+
   };
 
   return (
@@ -88,10 +89,10 @@ const toggleLike = async (email) => {
       <div className="row">
         <div className="slider-container">
           <Slider {...settings}>
-            {users.map((user, index) => (
+            { checkUsers(users).map((user, index) => (
               <div className="slider-item" key={user.email}>
                 <div className="card-image">
-                  <img src={'noProfile.png'} alt={user.email} />
+                  <img src={user.image || 'noProfile.png'} alt={user.email} />
                 </div>
                 <p className="personName" style={{ color: 'hsl(330, 84%, 50%)' }}>{user.name}</p>
                 <div className="card-content">
@@ -118,12 +119,12 @@ const toggleLike = async (email) => {
           <div className="expanded-card">
             <div className="close-btn" onClick={closeExpand}>X</div>
             <div className="card-image">
-              <img src={users[expanded].image || 'noProfile.png'} alt={users[expanded].email} />
+              <img src={checkUsers(users)[expanded].image || 'noProfile.png'} alt={checkUsers(users)[expanded].email} />
             </div>
-            <p className="personName-expand">{users[expanded].name}</p>
+            <p className="personName-expand">{checkUsers(users)[expanded].name}</p>
             <div className="card-content-expand">
-              <h1 className="card-title-expand">{users[expanded].title}</h1>
-              <p className="card-text-expand">{users[expanded].detail}</p>
+              <h1 className="card-title-expand">{checkUsers(users)[expanded].title}</h1>
+              <p className="card-text-expand">{checkUsers(users)[expanded].detail}</p>
             </div>
           </div>
         </>

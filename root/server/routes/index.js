@@ -13,6 +13,7 @@ const upload = multer({ storage: storage });
 
 const Users = require("../models/Users");
 const Image = require("../models/Image");
+const Chat = require("../models/Chat");
 
 router.use(express.json());
 router.use(express.urlencoded({ extended: true }));
@@ -198,6 +199,17 @@ const updateLikedUsers = async (req, res) => {
 
 router.post('/api/user/like', passport.authenticate('jwt', { session: false }), updateLikedUsers);
 
+router.post('/api/chat', async (req, res) => {
+  try {
+    const { sender, recipient, text } = req.body;
+    const message = new Chat({ sender, recipient, text });
+    await message.save();
+    res.json(message);
+  } catch (error) {
+    res.status(500).json({ error: 'Failed to send message' });
+  }
+});
+
 // GET ROUTES
 
 router.get('/api/user/check-auth', 
@@ -234,7 +246,7 @@ router.get('/api/user/image',
       res.send(image.buffer);
     }
     else{
-      res.status(404).json({msg: 'Image not found'});
+      res.status(404).json({msg: err});
     }
 });
 
@@ -275,5 +287,20 @@ router.get('/api/user/like',
       }
   }
 );
+
+router.get('/api/chat', async (req, res) => {
+  try {
+    const { sender, recipient } = req.query;
+    const messages = await Chat.find({
+      $or: [
+        { sender, recipient },
+        { sender: recipient, recipient: sender }
+      ]
+    }).sort({ timestamp: 1 }); // Sort by timestamp in ascending order
+    res.status(200).json(messages);
+  } catch (error) {
+    res.status(500).json({ error: 'Failed to fetch messages' });
+  }
+});
 
 module.exports = router;
