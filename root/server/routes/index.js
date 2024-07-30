@@ -152,6 +152,52 @@ router.post('/api/user/image',
   }
 );
 
+const updateLikedUsers = async (req, res) => {
+  try {
+      const { likedUsers, unlikedUsers } = req.body;
+      const currentUser = req.user;
+
+      // Find the current user
+      const user = await Users.findOne({ email: currentUser });
+      if (!user) return res.status(404).json({ msg: 'User not found' });
+
+      // Update the current user's liked users
+      user.liked = likedUsers;
+      await user.save();
+
+      // Find users to update (liked and unliked)
+      const [likedUserUpdates, unlikedUserUpdates] = await Promise.all([
+          Promise.all(likedUsers.map(email => Users.findOne({ email }))),
+          Promise.all(unlikedUsers.map(email => Users.findOne({ email })))
+      ]);
+
+      // Process unliked users
+      await Promise.all(unlikedUserUpdates.map(unlikedUser => {
+          if (unlikedUser) {
+              unlikedUser.likedBy = unlikedUser.likedBy.filter(likedBy => likedBy !== currentUser);
+              return unlikedUser.save();
+          }
+      }));
+
+      // Process liked users
+      await Promise.all(likedUserUpdates.map(likedUser => {
+          if (likedUser) {
+              if (!likedUser.likedBy.includes(currentUser)) {
+                  likedUser.likedBy.push(currentUser);
+                  return likedUser.save();
+              }
+          }
+      }));
+
+      res.json({ msg: 'Liked users updated successfully' });
+  } catch (error) {
+      console.error('Error updating liked users:', error);
+      res.status(500).json({ msg: 'Server error' });
+  }
+};
+
+router.post('/api/user/like', passport.authenticate('jwt', { session: false }), updateLikedUsers);
+
 // GET ROUTES
 
 router.get('/api/user/check-auth', 
@@ -216,5 +262,18 @@ router.get('/api/all-users',
     }
 });
 
+router.get('/api/user/like',
+  passport.authenticate('jwt', { session: false }),
+  async (req, res) => {
+      try {
+          const user = await Users.findOne({ email: req.user });
+          if (!user) return res.status(404).json({ msg: 'User not found' });
+          res.json({ likedUsers: user.liked });
+      } catch (error) {
+          console.error('Error fetching liked users:', error);
+          res.status(500).json({ msg: 'Server error' });
+      }
+  }
+);
 
 module.exports = router;

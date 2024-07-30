@@ -29,7 +29,7 @@ function Profile() {
         }
         fetchProfile();
     }
-    , []);
+    , [navigate]);
 
     useEffect(() => {
         const getProfilePicture = async () => {
@@ -43,7 +43,9 @@ function Profile() {
             if (response.ok)
                 setImgUrl(URL.createObjectURL(data));
             else
-                navigate('/login');
+                if (response.status === 401) navigate('/login');
+                setImgUrl('noProfile.png');
+
         }
         getProfilePicture();
     }

@@ -95,7 +95,7 @@
 
 .personName {
   color: hsl(330, 84%, 50%);
-  margin: -10px;
+  margin-top: -10px;
 }
 
 .expand {
@@ -138,6 +138,14 @@
   height: 80%;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
   z-index: 1000;
+  
+}
+
+.card-text-expand {
+  font-size: 0.9em;
+  color: white;
+  max-height: none; /* Remove any max-height restriction */
+  overflow-y: auto; /* Enable vertical scrolling */
 }
 
 .expanded-card .close-btn {
@@ -167,8 +175,22 @@
   white-space: nowrap;
 }
 
-.card-text-expand {
-  font-size: 0.9em;
-  color: white;
-  max-height: 8em; /* Approximately 4 lines */
+.card-content-expand {
+  background-color: hsl(0, 0%, 6%);
+  border-radius: 5px;
+  color: black;
+  width: 100%;
+  height: 50%;
+  position: relative;
+  overflow: auto; /* Enable scrolling */
+  margin-top: 20px;
+  padding: 10px;
+}
+
+.personName-expand {
+  color: hsl(330, 84%, 50%);
+  background-color: #000;
+  margin-top: -10px;
+  display: flex;
+  justify-content: center;
 }
