@@ -11,7 +11,7 @@ function Profile() {
     const navigate = useNavigate();
     const { t } = useTranslation();
 
-    useEffect(() => {
+    useEffect(() => { // To get the user 
         const fetchProfile = async () => {
             const response = await fetch('/api/user', {
                 method: 'GET',
@@ -29,7 +29,7 @@ function Profile() {
         fetchProfile();
     }, [navigate]);
 
-    useEffect(() => {
+    useEffect(() => { // To get the user's profile picture
         const getProfilePicture = async () => {
             const response = await fetch('/api/user/image', {
                 method: 'GET',

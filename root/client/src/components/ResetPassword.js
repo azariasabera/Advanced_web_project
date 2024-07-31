@@ -14,10 +14,6 @@ function ResetPassword() {
         />
         <button type="submit">Reset Password</button>
       </form>
-      <div className="oauth-buttons">
-        <a href="/auth/google" className="oauth-button">Reset with Google</a>
-        {/* Add similar links for Facebook, etc., if needed */}
-      </div>
     </div>
   );
 }

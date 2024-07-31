@@ -21,14 +21,11 @@ function Register() {
             },
             body: JSON.stringify(Object.fromEntries(formData)),
         });
-
+        const result = await response.text();
         if (response.ok) {
-            const result = await response.text();
-            console.log('Success:', result);
             setErrorMessage('');
-            navigate('/login');
+            navigate('/login'); // Redirecting to the login page
         } else {
-            const result = await response.text();
             setErrorMessage(`⚠️ ${result}`);
         }
     };

@@ -10,7 +10,7 @@ function GoogleAuth() {
     window.location.href = 'http://localhost:1234/api/auth/google';
   };
 
-  const checkToken = () => { // check if this site has a token in the URL
+  const checkToken = () => { // checks if this site has a token in the URL
     const urlParams = new URLSearchParams(window.location.search);
     const token = urlParams.get('token');
     if (token) {

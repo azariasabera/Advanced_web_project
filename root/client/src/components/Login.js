@@ -6,13 +6,12 @@ import { useTranslation } from 'react-i18next';
 function Login() {
   const [errorMessage, setErrorMessage] = useState('');
   const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [savePassword, setSavePassword] = useState(false);
+  const [password, setPassword] = useState(''); // to store the saved password
+  const [savePassword, setSavePassword] = useState(false); // to store the checkbox state
   const navigate = useNavigate();
   const { t } = useTranslation();
 
-  useEffect(() => {
-    // Load saved credentials from local storage
+  useEffect(() => { // Load saved credentials from local storage
     const savedEmail = localStorage.getItem('email');
     const savedPassword = localStorage.getItem('password');
     if (savedEmail && savedPassword) {

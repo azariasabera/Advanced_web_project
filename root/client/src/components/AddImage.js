@@ -20,7 +20,6 @@ function AddImage() {
                     navigate('/login');
                 }
             } catch (error) {
-                console.error('Error checking authentication:', error);
                 navigate('/login');
             }
         };
@@ -47,7 +46,6 @@ function AddImage() {
                 setStatus('⚠️ ' + data.msg);
             }
         } catch (error) {
-            console.error('Error uploading image:', error);
             setStatus('⚠️ ' + t('uploadError'));
         }
     };

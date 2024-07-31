@@ -1,25 +1,24 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import ChatWindow from './ChatWindow'; // New component to be created
+import ChatWindow from './ChatWindow';
 import './Chat.css';
 
 function Chat() {
     const [user, setUser] = useState(null);
-    const [matches, setMatches] = useState([]);
-    const [selectedChat, setSelectedChat] = useState(null);
+    const [matches, setMatches] = useState([]); // stores users that the logged in user has matched with
+    const [selectedChat, setSelectedChat] = useState(null); 
     const [users, setUsers] = useState([]);
     const navigate = useNavigate();
 
-    const populateMatches = (currentUser, allUsers) => {
+    const populateMatches = (currentUser, allUsers) => { // checks if the user has liked and been liked by another user
         const liked = currentUser.liked || [];
         const likedBy = currentUser.likedBy || [];
         const matchedUsers = allUsers.filter(u => liked.includes(u.email) && likedBy.includes(u.email));
         setMatches(matchedUsers);
-        console.log('Matched:', matchedUsers);
     };
 
-    useEffect(() => {
-        const fetchUserData = async () => {
+    useEffect(() => { // gathered all fetches to avoid async issues
+        const fetchUserData = async () => { // fetches the current user's data
             try {
                 const response = await fetch('/api/user', {
                     method: 'GET',
@@ -37,7 +36,7 @@ function Chat() {
             }
         };
 
-        const fetchUsersData = async (currentUser) => {
+        const fetchUsersData = async (currentUser) => { // fetches all users except the current user
             try {
                 const response = await fetch('/api/all-users', {
                     method: 'GET',
@@ -55,13 +54,13 @@ function Chat() {
             }
         };
 
-        const initialize = async () => {
+        const initialize = async () => { // after getting the current user and all users, populate the matches
             const currentUser = await fetchUserData();
             if (currentUser) {
                 const filteredUsers = await fetchUsersData(currentUser);
                 populateMatches(currentUser, filteredUsers);
-                setUser(currentUser); // Ensure user state is set after fetching
-                setUsers(filteredUsers); // Ensure users state is set after fetching
+                setUser(currentUser); 
+                setUsers(filteredUsers);
             }
         };
 
@@ -85,7 +84,7 @@ function Chat() {
                             </button>
                         ))
                     ) : (
-                        <p>No one to chat</p>
+                        <p>{'No one to chat :('}</p>
                     )}
                 </div>
                 <div className="messages">

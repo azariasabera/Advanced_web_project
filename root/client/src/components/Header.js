@@ -15,6 +15,8 @@ function Header() {
   };
 
   useEffect(() => {
+    /* Materialize dropdown and sidenav were not working, so I added their initialization here */
+
     // Initialize dropdown
     const elems = document.querySelectorAll('.dropdown-trigger');
     const instances = window.M.Dropdown.init(elems, {});

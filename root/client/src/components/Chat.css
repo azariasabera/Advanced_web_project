@@ -1,3 +1,4 @@
+/* Chat component styles */
 .chat-container {
     display: flex;
     height: 100vh; /* Ensures the chat container takes full viewport height */
@@ -6,7 +7,7 @@
 .chat-sidebar {
     flex: 0 0 25%;
     background-color: #f8f8f8;
-    border-right: 2px solid #ffc0cb; /* Pinkish separator */
+    border-right: 2px solid hsl(330, 84%, 50%); /* Pinkish separator */
     padding: 15px;
     overflow-y: auto;
 }
@@ -61,10 +62,6 @@
     border-bottom: 1px solid #ccc;
 }
 
-
-
-
-
 .message-input {
     display: flex;
     padding: 10px;
@@ -87,8 +84,6 @@
     cursor: pointer;
 }
 
-/* _______________________________________________________________ */
-
 .con {
     width : 100%;
     height: 500px;
@@ -98,7 +93,6 @@
 }
 
 .chat-title {
-    /* make the bottom underlined */
     border-bottom: 1px solid hsl(330, 84%, 50%);
     color: hsl(330, 84%, 50%);
 }
@@ -148,31 +142,31 @@
 .messagesDiv {
     flex: 4;
     margin: 10px;
-    padding: 10px; /* Added padding for spacing */
+    padding: 10px;
     border: 1px solid hsl(330, 84%, 50%);
     overflow-y: auto;
     display: flex;
-    flex-direction: column; /* Ensure messages stack vertically */
+    flex-direction: column; 
 }
 
 .message {
-    max-width: 70%; /* Ensure the message doesn’t take up too much space */
-    padding: 0 10px; /* Add padding to the left and right */
+    max-width: 70%;
+    padding: 0 10px; 
     border-radius: 20px;
-    word-wrap: break-word; /* Ensure long words wrap correctly */
-    display: inline-block; /* Ensures width fits content */
+    word-wrap: break-word; 
+    display: inline-block;
 }
 
 .message.sent {
     background-color: hsl(330, 84%, 50%);
     color: white;
-    align-self: flex-end; /* Align sent messages to the right */
+    align-self: flex-end; 
 }
 
 .message.received {
     background-color: #f1f0f0;
     color: hsl(330, 84%, 50%);
-    align-self: flex-start; /* Align received messages to the left */
+    align-self: flex-start;
 }
 
 .dropdown-list {
