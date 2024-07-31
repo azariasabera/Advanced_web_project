@@ -3,7 +3,6 @@ import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import Login from './components/Login';
 import Register from './components/Register';
-import ResetPassword from './components/ResetPassword';
 import Header from './components/Header';
 import Chat from './components/Chat';
 import Profile from './components/Profile';
@@ -47,7 +46,6 @@ import { IconButton } from '@mui/material';
             <Route path="/login" element={<div className='App-sub'><Login /></div>} />
             <Route path="/register" element={<div className='App-sub'><Register /></div>} />
             <Route path="/chat" element={<div className='App-chat'><Chat /></div>} />
-            <Route path="/reset-password" element={<div className='App-sub'><ResetPassword /></div>} />
             <Route path="/profile" element={<div className='App-sub'><Profile /></div>} />
             <Route path="/add-image" element={<div className='App-sub'><AddImage /></div>} />
             <Route path="/suggestions" element={<div className='App-chat'><Suggestions /></div>} />
