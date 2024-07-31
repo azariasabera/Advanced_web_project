@@ -7,6 +7,7 @@ const jwt = require('jsonwebtoken');
 const passport = require('passport');
 require('dotenv').config();
 require('../auth/validateToken');
+require('../auth/googleAuth');
 const multer = require('multer');
 const storage = multer.memoryStorage();
 const upload = multer({ storage: storage });
@@ -210,6 +211,7 @@ router.post('/api/chat', async (req, res) => {
   }
 });
 
+
 // GET ROUTES
 
 router.get('/api/user/check-auth', 
@@ -302,5 +304,34 @@ router.get('/api/chat', async (req, res) => {
     res.status(500).json({ error: 'Failed to fetch messages' });
   }
 });
+
+router.get('/api/auth/google', 
+  passport.authenticate('google', { scope: ['profile', 'email', 'openid']}));
+
+
+router.get('/api/auth/google/callback', 
+  passport.authenticate('google', { session: false }),
+  (req, res)=>{
+    try {
+      if(req.user){
+        const tokenPayload = {
+          email: req.user.email
+        }
+        jwt.sign(
+          tokenPayload, 
+          process.env.SECRET,
+          {expiresIn: '1h'},
+          (error, token) => {
+              if(error){
+                  res.status(403).send(`Error in token signing: ${error}`);
+              } else {
+                  res.redirect(`http://localhost:3000/auth/google?token=${token}`);
+              }
+          });
+      }
+    } catch (error) {
+      res.status(500).send(`Nanni Error occured: ${error}`);
+    }
+  });
 
 module.exports = router;

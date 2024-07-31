@@ -3,9 +3,12 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { useEffect, Suspense } from 'react';
 import './Header.css';
+import { Home } from '@mui/icons-material';
+import { IconButton } from '@mui/material';
+
 
 function Header() {
-    const { t , i18n } = useTranslation();
+    const { t, i18n } = useTranslation();
     const navigate = useNavigate();
 
     const changeLanguage = (lang) => {
@@ -25,7 +28,6 @@ function Header() {
         navigate('/login');
     }
 
-
     //const isActive = location.pathname === '/chat'; // To check if current path is '/chat'
     const isActive = true;
 
@@ -34,11 +36,11 @@ function Header() {
             {/* Dropdown Structure */}
             { isActive && (
                 <ul id="dropdown1" className="dropdown-content">
-                    <li><button onClick={() => navigate('/profile')}> Edit Profile</button></li>
-                    <li><button onClick={() => navigate('/add-image')}>Add new Image</button></li>
-                    <li><button onClick={() => navigate('/chat')}>Chats</button></li>
+                    <li><button onClick={() => navigate('/profile')}>{t('Edit Profile')}</button></li>
+                    <li><button onClick={() => navigate('/add-image')}>{t('Add new Image')}</button></li>
+                    <li><button onClick={() => navigate('/chat')}>{t('Chats')}</button></li>
                     <li className="divider"></li>
-                    <li><button onClick={() => logout()}>Logout</button></li>
+                    <li><button onClick={() => logout()}>{t('Logout')}</button></li>
                 </ul>
             )}
 
@@ -47,13 +49,20 @@ function Header() {
                 {/* Translation buttons shown on the left */}
                 <ul className="left">
                     <li>
-                        <Link to="/">{t('Home')}</Link>
+                        <Link to="/">
+                            <IconButton>
+                                <Home />
+                            </IconButton>
+                        </Link>
                     </li>
                     <li>
                         <button onClick={() => changeLanguage('fi')} id="fi">FI</button>
                     </li>
                     <li>
                         <button onClick={() => changeLanguage('en')} id="en">EN</button>
+                    </li>
+                    <li>
+                        <button onClick={() => changeLanguage('es')} id="es">ES</button>
                     </li>
                 </ul>
 
@@ -62,10 +71,11 @@ function Header() {
                     { isActive && (
                         <li>
                             <a className="right dropdown-trigger" href="#!" data-target="dropdown1">
-                                Menu
-                                <i className="material-icons right">
-                                    arrow_drop_down
-                                </i>
+                                <img 
+                                    src="noprofile.png" 
+                                    alt={t('User Profile')} 
+                                    className="circle responsive-img profile-img"
+                                />
                             </a>
                         </li>
                     )}
@@ -76,11 +86,10 @@ function Header() {
     );
 }
 
-    //export default Header
 export default function App() {
     return (
         <Suspense fallback="loading">
         <Header />
         </Suspense>
     );
-    }
+}

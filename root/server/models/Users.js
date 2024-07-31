@@ -3,7 +3,7 @@ const Schema = mongoose.Schema;
 const UsersSchema = new Schema({
     name : String,
     email : String,
-    password : String,
+    password : { type: String, optional: true },
     date : {
         type : String,
         default : Date.now
@@ -18,7 +18,7 @@ const UsersSchema = new Schema({
     },
 
     title : { type: String, default: "Title" },
-    detail: { type: String, default: "Nothing added yet" }
-
+    detail: { type: String, default: "Nothing added yet" },
+    googleId : { type: String, optional: true }
 });
 module.exports = mongoose.model("Users", UsersSchema);

@@ -1,8 +1,10 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { FiSearch } from 'react-icons/fi';
+import { useTranslation } from 'react-i18next';
 import './Chat.css';
 
 function ChatWindow({ chat, user }) {
+    const { t } = useTranslation();
     const [messages, setMessages] = useState([]);
     const [newMessage, setNewMessage] = useState('');
     const [searchExpanded, setSearchExpanded] = useState(false);
@@ -94,7 +96,7 @@ function ChatWindow({ chat, user }) {
                 {searchExpanded && (
                     <input
                         type="text"
-                        placeholder="Search messages"
+                        placeholder={t('Search messages')}
                         className="search-input"
                         value={searchText}
                         onChange={handleSearch}
@@ -125,11 +127,11 @@ function ChatWindow({ chat, user }) {
             <div className="messageSend">
                 <input
                     type="text"
-                    placeholder="Type your message..."
+                    placeholder={t('Type your message...')}
                     value={newMessage}
                     onChange={e => setNewMessage(e.target.value)}
                 />
-                <button onClick={handleSendMessage}>Send</button>
+                <button onClick={handleSendMessage}>{t('Send')}</button>
             </div>
         </div>
     );

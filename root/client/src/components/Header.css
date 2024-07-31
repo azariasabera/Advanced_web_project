@@ -12,24 +12,18 @@
     border-radius: 10px;
 }
 
+.dropdown-content {
+    border-radius: 10px;
+    background-color: black;
+}
 
 .dropdown-trigger {
-
-    background-color: white;
     color: hsl(330, 84%, 50%);
     width: 150px;
+    height: 50px;
     display: flex;
     align-items: center; 
-}
-
-.dropdown-trigger:hover {
-    background-color: hsl(330, 84%, 50%);
-    color: white;
-}
-
-.dropdown-trigger .material-icons {
-    margin-left: 5px;       /* Adjust the space between text and icon */
-    font-size: 24px;        /* Ensure the icon size matches your design */
+    margin-top: 10px;
 }
 
 li Link {
@@ -37,3 +31,28 @@ li Link {
     text-decoration: none;
     font-size: 80%;
 }
+
+.dropdown-trigger img {
+    width: 50%;
+    height: 100%;
+    border-radius: 50%;
+    margin-left: 10px;
+}
+
+@media screen and (max-width: 800px) {
+    .dropdown-trigger img {
+        width: 50%;
+        height: 50px;
+        border-radius: 50%;
+        margin-left: 10px;
+    }
+    .dropdown-trigger {
+        color: hsl(330, 84%, 50%);
+        width: 150px;
+        height: 50px;
+        display: flex;
+        align-items: center; 
+        margin-top: 5px;
+    }
+}
+

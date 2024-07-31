@@ -1,58 +1,82 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { useState, useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 
-
-function Profile() {
+function AddImage() {
+    const { t } = useTranslation();
     const [status, setStatus] = useState('');
     const navigate = useNavigate();
 
     useEffect(() => {
         const checkAuth = async () => {
-            const response = await fetch('/api/user', {
-                method: 'GET',
-                headers: {
-                    "Authorization": `Bearer ${localStorage.getItem('auth_token')}`
+            try {
+                const response = await fetch('/api/user', {
+                    method: 'GET',
+                    headers: {
+                        "Authorization": `Bearer ${localStorage.getItem('auth_token')}`
+                    }
+                });
+                if (!response.ok) {
+                    navigate('/login');
                 }
-            });
-            if (!response.ok) {
+            } catch (error) {
+                console.error('Error checking authentication:', error);
                 navigate('/login');
             }
-        }
+        };
         checkAuth();
-    }, []);
+    }, [navigate]);
 
-
-    const handleSubmit = async (e) => {   
+    const handleSubmit = async (e) => {
         e.preventDefault();
         const formData = new FormData(e.target);
-        const response = await fetch('/api/user/image', {
-            method: 'POST',
-            headers: {
-                "Authorization": `Bearer ${localStorage.getItem('auth_token')}`
-            },
-            body: formData
-        });
-        const data = await response.json();
-        if (response.ok) 
-            setStatus(data.msg);
-        else
-            setStatus('⚠️ ' + data.msg);
+
+        try {
+            const response = await fetch('/api/user/image', {
+                method: 'POST',
+                headers: {
+                    "Authorization": `Bearer ${localStorage.getItem('auth_token')}`
+                },
+                body: formData
+            });
+
+            const data = await response.json();
+            if (response.ok) {
+                setStatus(data.msg);
+            } else {
+                setStatus('⚠️ ' + data.msg);
+            }
+        } catch (error) {
+            console.error('Error uploading image:', error);
+            setStatus('⚠️ ' + t('uploadError'));
+        }
     };
-  return (
-    <div className="container">
-        <h2 style={{fontStyle:'italic'}}>Pictures tell a thousand words...</h2>
-        <form action='#' onSubmit={handleSubmit} encType="multipart/form-data">
-            <input type="file" name="image" accept="image/*" required />
-            <button type="submit">Add Image</button>
-            <p > {status}</p>
-        </form>
-        
-        <div className="links">
-        <Link to="/chat">Back to Chat</Link>
+
+    return (
+        <div className="container">
+            <h2 className="header">{t('picturesTellAThousandWords')}</h2>
+            <form onSubmit={handleSubmit} encType="multipart/form-data">
+                <input 
+                    type="file" 
+                    name="image" 
+                    accept="image/*" 
+                    required 
+                    className="file-input"
+                />
+                <button 
+                    type="submit"
+                    className="submit-button"
+                >
+                    {t('addImage')}
+                </button>
+                <p className="status">{status}</p>
+            </form>
+            
+            <div className="links">
+                <Link to="/chat" className="link">{t('backToChat')}</Link>
+            </div>
         </div>
-  </div>
-  )
+    );
 }
 
-export default Profile
+export default AddImage;

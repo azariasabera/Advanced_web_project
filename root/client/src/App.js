@@ -9,6 +9,9 @@ import Chat from './components/Chat';
 import Profile from './components/Profile';
 import AddImage from './components/AddImage';
 import Suggestions from './components/Suggestions';
+import GoogleAuth from './components/GoogleAuth';
+import { Google } from '@mui/icons-material';
+import { IconButton } from '@mui/material';
 
   function App() {
     const { t , i18n } = useTranslation();
@@ -32,6 +35,11 @@ import Suggestions from './components/Suggestions';
                       <Link to="/register">
                         <button type="button" id="register">{t('Register')}</button>
                       </Link>
+                      <Link to="/auth/google">
+                        <IconButton>
+                          <Google />
+                        </IconButton>
+                      </Link>
                     </div>
                   </div>
             } />
@@ -43,7 +51,8 @@ import Suggestions from './components/Suggestions';
             <Route path="/profile" element={<div className='App-sub'><Profile /></div>} />
             <Route path="/add-image" element={<div className='App-sub'><AddImage /></div>} />
             <Route path="/suggestions" element={<div className='App-chat'><Suggestions /></div>} />
-            <Route path="*" element={<h1>404: This is not the webpage you are looking for</h1>} />
+            <Route path="/auth/google" element={<div className='App-sub'><GoogleAuth /></div>} />
+            <Route path="*" element={<h1>{t('error')}</h1>} />
           </Routes>
         
       </Router>

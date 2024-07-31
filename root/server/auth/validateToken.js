@@ -12,5 +12,5 @@ passport.use(new JwtStrategy(opts, (jwt_payload, done) => {
     if (email) {
         return done(null, email); // email is passed to the next middleware, to access it 
     }
-    return done(null, false); 
+    return done(null, false);
 }));

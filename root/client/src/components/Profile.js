@@ -1,8 +1,7 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { useState } from 'react';
 import './Profile.css';
-
+import { useTranslation } from 'react-i18next';
 
 function Profile() {
     const [editInfo, setEditInfo] = useState(false);
@@ -10,6 +9,7 @@ function Profile() {
     const [imgUrl, setImgUrl] = useState('#'); // default image
     const [status, setStatus] = useState('');
     const navigate = useNavigate();
+    const { t } = useTranslation();
 
     useEffect(() => {
         const fetchProfile = async () => {
@@ -25,11 +25,9 @@ function Profile() {
             } else {
                 navigate('/login');
             }
-            
         }
         fetchProfile();
-    }
-    , [navigate]);
+    }, [navigate]);
 
     useEffect(() => {
         const getProfilePicture = async () => {
@@ -43,15 +41,14 @@ function Profile() {
             const data = await response.blob();
             if (response.ok)
                 setImgUrl(URL.createObjectURL(data));
-            else{
+            else {
                 if (response.status === 401) 
                     navigate('/login');
-                setImgUrl('noProfile.png');}
-
+                setImgUrl('noProfile.png');
+            }
         }
         getProfilePicture();
-    }
-    , []);
+    }, []);
 
     const handleSubmit = async (e) => {   
         e.preventDefault();
@@ -69,43 +66,43 @@ function Profile() {
         if (response.ok) {
             let data = await response.json();
             console.log(data);
-            setStatus('Bio updated successfully');}
-        else
-            setStatus('Failed to update bio');
+            setStatus(t('Bio updated successfully'));
+        } else {
+            setStatus(t('Failed to update bio'));
+        }
     };
 
   return (
     <div className="container">
         {!editInfo ? (
             <div>
-                <img src={imgUrl} alt="Profile Picture" />
-                <h2>Profile</h2>
-                <p>Name: {profile.name}</p>
-                <p>Email: {profile.email}</p>
-                <p>Registered on: {profile.date}</p>
+                <img src={imgUrl} alt={t('Profile Picture')} />
+                <h2>{t('Profile')}</h2>
+                <p>{t('Name')}: {profile.name}</p>
+                <p>{t('Email')}: {profile.email}</p>
+                <p>{t('Registered on')}: {profile.date}</p>
 
-                <h3>Bio</h3>
-                <p> {profile.title} </p>
-                <p> {profile.detail} </p>
-                <button onClick={() => setEditInfo(true)}>Edit bio</button>
+                <h3>{t('Bio')}</h3>
+                <p>{profile.title}</p>
+                <p>{profile.detail}</p>
+                <button onClick={() => setEditInfo(true)}>{t('Edit bio')}</button>
             </div>  
-        ): (
+        ) : (
             <div>
-                <h2>Tell people about you</h2>
+                <h2>{t('Tell people about you')}</h2>
                 <form action='#' onSubmit={handleSubmit}>
-                    <input type="text" name="title" placeholder="Title"/>
-                    <input type="text" name="detail" placeholder="Detail"/>
-                    <button type="submit">Post</button>
+                    <input type="text" name="title" placeholder={t('Title')} />
+                    <input type="text" name="detail" placeholder={t('Detail')} />
+                    <button type="submit">{t('Post')}</button>
                 </form>
-                <p> {status} </p>
+                <p>{status}</p>
             </div>
         )}
-    <div className="links">
-      <Link to="/chat">Back to Chat</Link>
+        <div className="links">
+            <Link to="/chat">{t('Back to Chat')}</Link>
+        </div>
     </div>
-
-  </div>
   )
 }
 
-export default Profile
+export default Profile;

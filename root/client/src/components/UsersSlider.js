@@ -3,61 +3,64 @@ import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import './UsersSlider.css';
+import { useTranslation } from 'react-i18next';
 
 function UsersSlider({ users }) {
   const [likedUsers, setLikedUsers] = useState([]); // Track liked state for each user
   const [unlikedUsers, setUnlikedUsers] = useState([]); // Track unliked state for each user
   const [expanded, setExpanded] = useState(null);
+  const { t } = useTranslation();
 
   useEffect(() => {
     const fetchLikedUsers = async () => {
-        try {
-            const response = await fetch('/api/user/like', {
-                method: 'GET',
-                headers: {
-                    'Authorization': `Bearer ${localStorage.getItem('auth_token')}`
-                }
-            });
-            if (!response.ok) throw new Error('Failed to fetch liked users');
-            const data = await response.json();
-            setLikedUsers(data.likedUsers);
-        } catch (error) {
-            console.error('Error fetching liked users:', error);
-        }
+      try {
+        const response = await fetch('/api/user/like', {
+          method: 'GET',
+          headers: {
+            'Authorization': `Bearer ${localStorage.getItem('auth_token')}`
+          }
+        });
+        if (!response.ok) throw new Error('Failed to fetch liked users');
+        const data = await response.json();
+        setLikedUsers(data.likedUsers);
+      } catch (error) {
+        console.error('Error fetching liked users:', error);
+      }
     };
     fetchLikedUsers();
-}, []);
+  }, []);
 
-const toggleLike = async (email) => {
+  const toggleLike = async (email) => {
     const isLiked = likedUsers.includes(email);
     const updatedLikedUsers = isLiked 
-        ? likedUsers.filter(user => user !== email)
-        : [...likedUsers, email];
+      ? likedUsers.filter(user => user !== email)
+      : [...likedUsers, email];
     const updatedUnlikedUsers = isLiked 
-        ? [...unlikedUsers, email]
-        : unlikedUsers.filter(user => user !== email);
+      ? [...unlikedUsers, email]
+      : unlikedUsers.filter(user => user !== email);
 
     setLikedUsers(updatedLikedUsers);
     setUnlikedUsers(updatedUnlikedUsers);
 
     try {
-        const response = await fetch('/api/user/like', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${localStorage.getItem('auth_token')}`
-            },
-            body: JSON.stringify({
-                likedUsers: updatedLikedUsers,
-                unlikedUsers: updatedUnlikedUsers
-            })
-        });
-        if (!response.ok) throw new Error('Failed to update liked users');
-        console.log('Success:', await response.json());
+      const response = await fetch('/api/user/like', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${localStorage.getItem('auth_token')}`
+        },
+        body: JSON.stringify({
+          likedUsers: updatedLikedUsers,
+          unlikedUsers: updatedUnlikedUsers
+        })
+      });
+      if (!response.ok) throw new Error('Failed to update liked users');
+      console.log('Success:', await response.json());
     } catch (error) {
-        console.error('Error updating liked users:', error);
+      console.error('Error updating liked users:', error);
     }
-};
+  };
+
   const toggleExpand = (index) => {
     setExpanded(index);
   };
@@ -70,7 +73,7 @@ const toggleLike = async (email) => {
     if (users.length === 1) 
       return [...users, ...users];
     return users;
-  }
+  };
 
   const settings = {
     dots: true,
@@ -78,14 +81,11 @@ const toggleLike = async (email) => {
     speed: 500,
     slidesToShow: users.length === 1 ? 1 : 2,
     slidesToScroll: 1,
-    // if there is only one user, duplicate the user to show 2 cards:
-    // it is implemented like this:
-
   };
 
   return (
     <div>
-      <h1 className='title'>People you may like...</h1>
+      <h1 className='title'>{t('People you may like...')}</h1>
       <div className="row">
         <div className="slider-container">
           <Slider {...settings}>
@@ -105,7 +105,7 @@ const toggleLike = async (email) => {
                     <i className="material-icons">favorite</i>
                   </a>
                   <p onClick={() => toggleExpand(index)} className='expand'>
-                    expand
+                    {t('expand')}
                   </p>
                 </div>
               </div>
