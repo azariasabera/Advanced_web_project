@@ -6,8 +6,8 @@ var cors = require("cors");
 const mongoose = require('mongoose');
 const passport = require('passport');
 
-var indexRouter = require('./routes/index');
-var usersRouter = require('./routes/users');
+var getRouter = require('./routes/gets');
+var postRouter = require('./routes/posts');
 
 var app = express();
 app.use(cors());
@@ -18,8 +18,8 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('/', indexRouter);
-app.use('/users', usersRouter);
+app.use('/', getRouter);
+app.use('/', postRouter);
 
 if (process.env.NODE_ENV === 'development') {
     var corsOptions = {

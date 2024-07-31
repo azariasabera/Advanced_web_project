@@ -37,6 +37,7 @@ li Link {
     height: 100%;
     border-radius: 50%;
     margin-left: 10px;
+    border: 2px solid hsl(330, 84%, 50%);
 }
 
 @media screen and (max-width: 800px) {

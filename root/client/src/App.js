@@ -29,11 +29,11 @@ import { IconButton } from '@mui/material';
                     </div>
           
                     <div id="navigateDiv">
+                      <Link to="/register">
+                        <button type="button" id="regcdister">{t('Register')}</button>
+                      </Link>
                       <Link to="/login">
                         <button type="button" id="login">{t('Login')}</button>
-                      </Link>
-                      <Link to="/register">
-                        <button type="button" id="register">{t('Register')}</button>
                       </Link>
                       <Link to="/auth/google">
                         <IconButton>

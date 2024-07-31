@@ -19,13 +19,9 @@ const Chat = require("../models/Chat");
 router.use(express.json());
 router.use(express.urlencoded({ extended: true }));
 
-/* GET home page. */
-router.get('/', function(req, res, next) {
-  res.render('index', { title: 'Express' });
-});
-
 // POST ROUTES
 
+// To register a new user
 router.post('/api/user/register', 
   upload.none(),
   body('email').isEmail(),
@@ -39,7 +35,6 @@ router.post('/api/user/register',
   ,(req, res, next)=>{  
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
-        console.log(req.body.password);
         return res.status(400).send('Password is not strong enough');
     }
     Users.findOne({email: req.body.email})
@@ -54,7 +49,6 @@ router.post('/api/user/register',
                 });
                 newUser.save();
                 return res.send(newUser);
-                //res.redirect('/login.html');
             } else {
                 return res.status(403).send('Email already in use');
             }
@@ -63,6 +57,7 @@ router.post('/api/user/register',
         });
 });
 
+// To login a user
 router.post('/api/user/login', 
   upload.none(),
   body('email').isEmail(),
@@ -80,7 +75,7 @@ router.post('/api/user/login',
     }
     Users.findOne({email: req.body.email})
         .then(async (user) => {
-            if(user){
+            if(user){ // Create a token, if the user
                 if(await bcrypt.compare(req.body.password, user.password)){
                     const tokenPayload = {
                         email: user.email
@@ -88,7 +83,7 @@ router.post('/api/user/login',
                     jwt.sign(
                       tokenPayload, 
                       process.env.SECRET,
-                      {expiresIn: '1h'},
+                      {expiresIn: '2h'}, // I assigned 2 hours for the token to expire
                       (error, token) => {
                           if(error){
                               res.status(403).send(`Error in signing: ${error}`);
@@ -111,6 +106,7 @@ router.post('/api/user/login',
     });
 });
 
+// To add an image to the user
 router.post('/api/user/image', 
   passport.authenticate('jwt', { session: false }),
   upload.single('image'),
@@ -138,23 +134,33 @@ router.post('/api/user/image',
     }
   });
 
-  router.post('/api/user/bio',
-    passport.authenticate('jwt', { session: false }),
-    async (req, res)=>{
-      let user = await Users.findOne({email: req.user});
-      if(user){
-        user.title = req.body.title;
-        user.detail = req.body.detail;
-        user.save();
-        res.json({msg: 'Bio updated successfully'});
-      }
-      else{
-        res.status(404).json({msg: 'User not found'});
-      }
-  }
-);
+// To update the bio of the user  
+router.post('/api/user/bio',
+  passport.authenticate('jwt', { session: false }),
+  async (req, res)=>{
+    let user = await Users.findOne({email: req.user});
+    if(user){ // I deleted the previous bio and added the new one
+      user.title = req.body.title; 
+      user.detail = req.body.detail;
+      user.save();
+      res.json({msg: 'Bio updated successfully'});
+    }
+    else{
+      res.status(404).json({msg: 'User not found'});
+    }
+});
 
+// To update the liked users of the user (will feed it to the below post route)
 const updateLikedUsers = async (req, res) => {
+
+      /*  LOGIC OF LIKE/UNLIKE: 
+       *  In my db, I have a liked & likedBy array in the user schema.
+       *  It is easy to update who the user liked, just replace the liked users array with the new one.
+       *  Then I will add this current user to the likedBy array of the liked users.
+       *  But if the current user unlikes previously liked users, I have to remove the user from the 
+       *  likedBy array of the liked users. So I have to keep track of who the user liked before.
+       */ 
+
   try {
       const { likedUsers, unlikedUsers } = req.body;
       const currentUser = req.user;
@@ -167,13 +173,13 @@ const updateLikedUsers = async (req, res) => {
       user.liked = likedUsers;
       await user.save();
 
-      // Find users to update (liked and unliked)
+      // Find users to update (liked and unliked). Used Promise.all to avoid nested promises
       const [likedUserUpdates, unlikedUserUpdates] = await Promise.all([
           Promise.all(likedUsers.map(email => Users.findOne({ email }))),
           Promise.all(unlikedUsers.map(email => Users.findOne({ email })))
       ]);
 
-      // Process unliked users
+      // Process unliked users, remove the current user from their likedBy array
       await Promise.all(unlikedUserUpdates.map(unlikedUser => {
           if (unlikedUser) {
               unlikedUser.likedBy = unlikedUser.likedBy.filter(likedBy => likedBy !== currentUser);
@@ -181,16 +187,15 @@ const updateLikedUsers = async (req, res) => {
           }
       }));
 
-      // Process liked users
+      // Process liked users, if the current user is not in their likedBy array already, add them
       await Promise.all(likedUserUpdates.map(likedUser => {
           if (likedUser) {
-              if (!likedUser.likedBy.includes(currentUser)) {
+              if (!likedUser.likedBy.includes(currentUser)) { // to avoid duplicates
                   likedUser.likedBy.push(currentUser);
                   return likedUser.save();
               }
           }
       }));
-
       res.json({ msg: 'Liked users updated successfully' });
   } catch (error) {
       console.error('Error updating liked users:', error);
@@ -200,6 +205,7 @@ const updateLikedUsers = async (req, res) => {
 
 router.post('/api/user/like', passport.authenticate('jwt', { session: false }), updateLikedUsers);
 
+// To save the chat messages, including the sender, recipient, and text
 router.post('/api/chat', async (req, res) => {
   try {
     const { sender, recipient, text } = req.body;
@@ -211,127 +217,5 @@ router.post('/api/chat', async (req, res) => {
   }
 });
 
-
-// GET ROUTES
-
-router.get('/api/user/check-auth', 
-  passport.authenticate('jwt', { session: false }),
-  (req, res)=>{
-
-    if(req.user){
-      res.json({isAuthenticated: true});
-    }
-    else{
-      res.status(403).json({isAuthenticated: false});
-    }
-});
-
-router.get('/api/user',
-  passport.authenticate('jwt', { session: false }),
-  async (req, res)=>{
-    let user = await Users.findOne({email: req.user});
-    if(user){
-      res.json(user);
-    }
-    else{
-      res.status(404).json({msg: 'User not found'});
-    }
-});
-
-router.get('/api/user/image', 
-  passport.authenticate('jwt', { session: false }),
-  async (req, res)=>{
-    let image = await Image.findOne({email: req.user});
-    if(image){
-      res.setHeader('Content-Type', image.mimetype);
-      res.setHeader('Content-Disposition', 'inline');
-      res.send(image.buffer);
-    }
-    else{
-      res.status(404).json({msg: 'Image not found'});
-    }
-});
-
-router.get('/api/all-users',
-  passport.authenticate('jwt', { session: false }), 
-  async (req, res) => {
-    try {
-      let rawData = await Users.find();
-      let restOfUsers = rawData.filter(user => user.email !== req.user.email); 
-
-      let usersWithImages = await Promise.all(
-        restOfUsers.map(async user => {
-          let image = await Image.findOne({ email: user.email });
-          return {
-            ...user.toObject(), 
-            image: image ? `data:${image.mimetype};base64,${image.buffer.toString('base64')}` : null
-          };
-        })
-      );
-
-      res.json(usersWithImages);
-    } catch (err) {
-      console.error(err);
-      res.status(500).json({ error: 'Server error' });
-    }
-});
-
-router.get('/api/user/like',
-  passport.authenticate('jwt', { session: false }),
-  async (req, res) => {
-      try {
-          const user = await Users.findOne({ email: req.user });
-          if (!user) return res.status(404).json({ msg: 'User not found' });
-          res.json({ likedUsers: user.liked });
-      } catch (error) {
-          console.error('Error fetching liked users:', error);
-          res.status(500).json({ msg: 'Server error' });
-      }
-  }
-);
-
-router.get('/api/chat', async (req, res) => {
-  try {
-    const { sender, recipient } = req.query;
-    const messages = await Chat.find({
-      $or: [
-        { sender, recipient },
-        { sender: recipient, recipient: sender }
-      ]
-    }).sort({ timestamp: 1 }); // Sort by timestamp in ascending order
-    res.status(200).json(messages);
-  } catch (error) {
-    res.status(500).json({ error: 'Failed to fetch messages' });
-  }
-});
-
-router.get('/api/auth/google', 
-  passport.authenticate('google', { scope: ['profile', 'email', 'openid']}));
-
-
-router.get('/api/auth/google/callback', 
-  passport.authenticate('google', { session: false }),
-  (req, res)=>{
-    try {
-      if(req.user){
-        const tokenPayload = {
-          email: req.user.email
-        }
-        jwt.sign(
-          tokenPayload, 
-          process.env.SECRET,
-          {expiresIn: '1h'},
-          (error, token) => {
-              if(error){
-                  res.status(403).send(`Error in token signing: ${error}`);
-              } else {
-                  res.redirect(`http://localhost:3000/auth/google?token=${token}`);
-              }
-          });
-      }
-    } catch (error) {
-      res.status(500).send(`Nanni Error occured: ${error}`);
-    }
-  });
 
 module.exports = router;

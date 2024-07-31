@@ -36,8 +36,8 @@ function Register() {
     return (
         <div className="container">
             <h2>{t('Register')}</h2>
-            <form onSubmit={handleSubmit}>
-                <input type="text" name='name' placeholder={t('Name')} required />
+            <form action='#' onSubmit={handleSubmit}>
+                <input type="text" name='name' class="validate" placeholder={t('Name')} required />
                 <input type="email" name='email' placeholder={t('Email')} required />
                 <input type="password" name='password' placeholder={t('Password')} required />
                 {errorMessage && <p className="errorMessage">{errorMessage}</p>}

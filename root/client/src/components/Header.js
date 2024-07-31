@@ -87,7 +87,7 @@ function Header() {
                 <a className="right dropdown-trigger" href="#!" data-target="dropdown1">
                   <img
                     src={imgUrl}
-                    alt={t('User Profile')}
+                    alt={t('Profile')}
                     className="circle responsive-img profile-img"
                   />
                 </a>
