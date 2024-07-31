@@ -1,3 +1,4 @@
+/* SLIDER STYLES */
 .slider-container {
   width: 60%;
   margin: 50px auto;
@@ -39,6 +40,7 @@
   transform: scale(0.95);
 }
 
+/* Added styles for the card image */
 .card-image {
   margin-bottom: 10px;
   display: flex;
@@ -61,7 +63,7 @@
   white-space: nowrap;
 }
 
-.card-content {
+.card-content { /* The contains the texts of the card */
   background-color: hsl(0, 0%, 6%);
   border-radius: 5px;
   color: black;
@@ -70,7 +72,7 @@
   position: relative;
 }
 
-.card-text {
+.card-text { /* The text of the card */
   overflow: hidden;
   text-overflow: ellipsis;
   font-size: 0.9em;
@@ -85,7 +87,7 @@
   background-color: white;
 }
 
-.title {
+.title { /* The title of the card */
   color: hsl(330, 84%, 50%);
   text-align: center;
   font-size: 1.8em;
@@ -93,13 +95,15 @@
   margin-bottom: 20px;
 }
 
-.personName {
+.personName { /* The name of the person */
   color: hsl(330, 84%, 50%);
   margin-top: -10px;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
 }
+
+/* WHEN THE CARD IS EXPANDED */
 
 .expand {
   font-size: 0.7em;
@@ -109,50 +113,12 @@
   left: 10px;
 }
 
-@media (max-width: 999px) {
-  .slider-item {
-    padding: 20px;
-  }
-
-  .slider-container {
-    width: 90%;
-    padding: 10px;
-  }
-
-  .card-title {
-    font-size: 1em;
-  }
-
-  .card-text {
-    font-size: 0.8em;
-  }
-}
-
-@media (max-width: 768px) {
-  .slider-item {
-    padding: 20px;
-  }
-
-  .slider-container {
-    width: 90%;
-    padding: 10px;
-  }
-
-  .card-title {
-    font-size: 1em;
-  }
-
-  .card-text {
-    font-size: 0.8em;
-  }
-}
-
 .expanded-card {
   position: fixed;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  background: hsl(0, 2%, 36%);
+  background: hwb(0 9% 91%);
   color: #000;
   padding: 20px;
   border-radius: 10px;
@@ -160,7 +126,7 @@
   height: 80%;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
   z-index: 1000;
-  
+  border: 2px solid hsl(330, 84%, 50%);
 }
 
 .card-text-expand {
@@ -174,7 +140,13 @@
   position: absolute;
   top: 10px;
   right: 10px;
+  width: 30px;
   cursor: pointer;
+  color: hsl(330, 84%, 50%);
+  border: 2px solid hsl(330, 84%, 50%);
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
 }
 
 .overlay {
@@ -211,13 +183,30 @@
 
 .personName-expand {
   color: hsl(330, 84%, 50%);
-  background-color: #000;
+  background-color: hwb(0 9% 91%);
   margin-top: -10px;
   display: flex;
   justify-content: center;
 }
 
-@media screen and (max-width: 1000px) {
+@media (max-width: 999px) {
+  .slider-item {
+    padding: 20px;
+  }
+
+  .slider-container {
+    width: 90%;
+    padding: 10px;
+  }
+
+  .card-title {
+    font-size: 1em;
+  }
+
+  .card-text {
+    font-size: 0.8em;
+  }
+
   .expanded-card {
     width: 90%;
     height: 90%;
@@ -232,5 +221,24 @@
     overflow: auto; /* Enable scrolling */
     margin-top: 20px;
     padding: 10px;
+  }
+}
+
+@media (max-width: 768px) {
+  .slider-item {
+    padding: 20px;
+  }
+
+  .slider-container {
+    width: 90%;
+    padding: 10px;
+  }
+
+  .card-title {
+    font-size: 1em;
+  }
+
+  .card-text {
+    font-size: 0.8em;
   }
 }

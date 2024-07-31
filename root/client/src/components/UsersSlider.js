@@ -1,17 +1,19 @@
 import React, { useState, useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
+
+// Packages for the slider
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import './UsersSlider.css';
-import { useTranslation } from 'react-i18next';
 
 function UsersSlider({ users }) {
   const [likedUsers, setLikedUsers] = useState([]); // Track liked state for each user
   const [unlikedUsers, setUnlikedUsers] = useState([]); // Track unliked state for each user
-  const [expanded, setExpanded] = useState(null);
+  const [expanded, setExpanded] = useState(null); // Track expanded state for each user
   const { t } = useTranslation();
 
-  useEffect(() => {
+  useEffect(() => { // To get the like status of each user
     const fetchLikedUsers = async () => {
       try {
         const response = await fetch('/api/user/like', {
@@ -30,12 +32,12 @@ function UsersSlider({ users }) {
     fetchLikedUsers();
   }, []);
 
-  const toggleLike = async (email) => {
-    const isLiked = likedUsers.includes(email);
+  const toggleLike = async (email) => { // To like/unlike a user
+    const isLiked = likedUsers.includes(email); // Check if the user is already liked
     const updatedLikedUsers = isLiked 
       ? likedUsers.filter(user => user !== email)
       : [...likedUsers, email];
-    const updatedUnlikedUsers = isLiked 
+    const updatedUnlikedUsers = isLiked // unliked users are those who were previously liked
       ? [...unlikedUsers, email]
       : unlikedUsers.filter(user => user !== email);
 
@@ -43,7 +45,7 @@ function UsersSlider({ users }) {
     setUnlikedUsers(updatedUnlikedUsers);
 
     try {
-      const response = await fetch('/api/user/like', {
+      const response = await fetch('/api/user/like', { // update the ChatUser model
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -94,7 +96,7 @@ function UsersSlider({ users }) {
                 <div className="card-image">
                   <img src={user.image || 'noProfile.png'} alt={user.email} />
                 </div>
-                <p className="personName" style={{ color: 'hsl(330, 84%, 50%)' }}>{user.name}</p>
+                <p className="personName">{user.name}</p>
                 <div className="card-content">
                   <h1 className="card-title">{user.title}</h1>
                   <p className={`card-text ${expanded === index ? 'expanded' : ''}`}>{user.detail}</p>
@@ -113,7 +115,7 @@ function UsersSlider({ users }) {
           </Slider>
         </div>
       </div>
-      {expanded !== null && (
+      {expanded !== null && (  // Expanded card
         <>
           <div className="overlay" onClick={closeExpand}></div>
           <div className="expanded-card">
