@@ -85,7 +85,7 @@ function Login() {
       <div className="links">
         <Link to="/register">{t('New here? Register')}</Link>
         <br />
-        <Link to="/forgot-password">{t('Forgot your password?')}</Link>
+        <Link to="/reset-password">{t('Forgot your password?')}</Link>
       </div>
     </div>
   );

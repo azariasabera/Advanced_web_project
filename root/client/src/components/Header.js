@@ -62,7 +62,7 @@ function Header() {
   return (
     <>
         <ul id="dropdown1" className="dropdown-content">
-          <li><button onClick={() => navigate('/profile')}>{t('Edit Profile')}</button></li>
+          <li><button onClick={() => navigate('/profile')}>{t('My Profile')}</button></li>
           <li><button onClick={() => navigate('/add-image')}>{t('Add new Image')}</button></li>
           <li><button onClick={() => navigate('/chat')}>{t('Chats')}</button></li>
           <li className="divider"></li>

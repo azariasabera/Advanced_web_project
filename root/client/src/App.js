@@ -47,7 +47,7 @@ import { IconButton } from '@mui/material';
             <Route path="/login" element={<div className='App-sub'><Login /></div>} />
             <Route path="/register" element={<div className='App-sub'><Register /></div>} />
             <Route path="/chat" element={<div className='App-chat'><Chat /></div>} />
-            <Route path="/forgot-password" element={<div className='App-sub'><ResetPassword /></div>} />
+            <Route path="/reset-password" element={<div className='App-sub'><ResetPassword /></div>} />
             <Route path="/profile" element={<div className='App-sub'><Profile /></div>} />
             <Route path="/add-image" element={<div className='App-sub'><AddImage /></div>} />
             <Route path="/suggestions" element={<div className='App-chat'><Suggestions /></div>} />
