@@ -65,6 +65,7 @@ function Header() {
           <li><button onClick={() => navigate('/profile')}>{t('My Profile')}</button></li>
           <li><button onClick={() => navigate('/add-image')}>{t('Add new Image')}</button></li>
           <li><button onClick={() => navigate('/chat')}>{t('Chats')}</button></li>
+          <li><button onClick={() => navigate('/suggestions')}>{t('Suggestions')}</button></li>
           <li className="divider"></li>
           <li><button onClick={logout}>{t('Logout')}</button></li>
         </ul>

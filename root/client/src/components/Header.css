@@ -9,13 +9,18 @@
 
 .dropdown-content a:hover {
     background-color: hsl(330, 84%, 50%);
-    color : white;
+    /*color : white;*/
     border-radius: 10px;
+}
+
+.dropdown-content li:hover {
+    background-color: black;
 }
 
 .dropdown-content {
     border-radius: 10px;
     background-color: black;
+    top: -50px; /* To move the dropdown menu below the dropdown button */
 }
 
 .dropdown-trigger {

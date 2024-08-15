@@ -40,5 +40,10 @@
     "picturesTellAThousandWords": "Las imágenes dicen más que mil palabras...",
     "addImage": "Agregar imagen",
     "uploadError": "Error al subir la imagen. Por favor, inténtelo de nuevo.",
-    "backToChat": "Volver al chat"
+    "backToChat": "Volver al chat",
+    "Reset Password": "Restablecer Contraseña",
+    "invalidEmail": "Correo electrónico inválido, por favor inténtalo de nuevo",
+    "noEmail": "No se encontró el correo electrónico, regístrese para crear una cuenta",
+    "resetSuccess": "Correo electrónico de restablecimiento de contraseña enviado, por favor revisa tu correo electrónico",
+    "resetFail": "Error al restablecer la contraseña, por favor inténtalo de nuevo"
 }

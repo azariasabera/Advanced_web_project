@@ -8,9 +8,12 @@ const passport = require('passport');
 require('dotenv').config();
 require('../auth/validateToken');
 require('../auth/googleAuth');
+const { sendResetPasswordEmail } = require('../auth/resetAuth');
 const multer = require('multer');
 const storage = multer.memoryStorage();
 const upload = multer({ storage: storage });
+const crypto = require('crypto');
+const nodemailer = require('nodemailer');
 
 const Users = require("../models/Users");
 const Image = require("../models/Image");
@@ -216,6 +219,65 @@ router.post('/api/chat', async (req, res) => {
     res.status(500).json({ error: 'Failed to send message' });
   }
 });
+
+// Check for the email, and if it exists, send a password reset link
+router.post('/api/user/reset-password',
+  upload.none(),
+  body('email').isEmail(),
+  async (req, res) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+        return res.status(400).json({ error: 'invalidEmail' });
+    }
+    try {
+        const user = await Users.findOne({ email: req.body.email });
+        if (!user) return res.status(404).json({ error: 'noEmail' });
+
+        // Now that the user exists, I will send the password reset link
+
+        // Generate a one-time token
+        const token = crypto.randomBytes(32).toString('hex');
+        const expiration = Date.now() + 3600000; // 1 hour from now
+
+        // Save the token and expiration to the user's record
+        user.resetToken = token;
+        user.resetTokenExpiration = expiration;
+        await user.save();
+
+        try {
+        // Send an email with the reset link
+        const resetLink = `${process.env.FRONTEND_URL}/reset-password/${token}`;
+        await sendResetPasswordEmail(user.email, resetLink);
+        } catch (error) {
+        console.error('Error sending reset password email:', error.message)};
+
+        res.json({ msg: 'resetSuccess' });
+    } catch (error) {
+        res.status(500).json({ error: 'resetFail' });
+    }
+  });
+
+router.post('/api/user/reset-password/:token', async (req, res) => {
+    try {
+        const user = await Users.findOne({
+            resetToken: req.params.token,
+            resetTokenExpiration: { $gt: Date.now() } // Check if token is still valid
+        });
+
+        if (!user) return res.status(400).json({ error: 'invalidOrExpiredToken' });
+
+        const hashedPassword = await bcrypt.hash(req.body.password, 12);
+        user.password = hashedPassword;
+        user.resetToken = undefined; // Clear the token
+        user.resetTokenExpiration = undefined; // Clear the expiration
+        await user.save();
+
+        res.json({ msg: 'passwordResetSuccess' });
+    } catch (error) {
+        res.status(500).json({ error: 'resetFail' });
+    }
+});
+
 
 
 module.exports = router;

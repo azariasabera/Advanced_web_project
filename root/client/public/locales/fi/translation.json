@@ -40,5 +40,10 @@
     "picturesTellAThousandWords": "Kuvat kertovat enemmän kuin tuhat sanaa...",
     "addImage": "Lisää kuva",
     "uploadError": "Virhe kuvan lataamisessa. Yritä uudelleen.",
-    "backToChat": "Takaisin keskusteluun"
+    "backToChat": "Takaisin keskusteluun",
+    "Reset Password": "Nollaa salasana",
+    "invalidEmail": "Virheellinen sähköposti, yritä uudelleen",
+    "noEmail": "Sähköpostia ei löytynyt, rekisteröidy luodaksesi tilin",
+    "resetSuccess": "Salasanan nollausviesti lähetetty, tarkista sähköpostisi",
+    "resetFail": "Salasanan nollaus epäonnistui, yritä uudelleen"
 }

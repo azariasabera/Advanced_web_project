@@ -40,5 +40,10 @@
     "picturesTellAThousandWords": "Pictures tell a thousand words...",
     "addImage": "Add Image",
     "uploadError": "Error uploading image. Please try again.",
-    "backToChat": "Back to Chat"
+    "backToChat": "Back to Chat",
+    "Reset Password": "Reset Password",
+    "invalidEmail": "Invalid email, please try again",
+    "noEmail": "Email was not found, register to create an account",
+    "resetSuccess": "Password reset email sent, please check your email",
+    "resetFail": "Password reset failed, please try again"
 }

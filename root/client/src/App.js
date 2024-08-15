@@ -11,6 +11,8 @@ import Suggestions from './components/Suggestions';
 import GoogleAuth from './components/GoogleAuth';
 import { Google } from '@mui/icons-material';
 import { IconButton } from '@mui/material';
+import ResetPassword from './components/ResetPassword';
+import ResetPasswordForm from './components/ResetPasswordForm';
 
   function App() {
     const { t , i18n } = useTranslation();
@@ -50,6 +52,8 @@ import { IconButton } from '@mui/material';
             <Route path="/add-image" element={<div className='App-sub'><AddImage /></div>} />
             <Route path="/suggestions" element={<div className='App-chat'><Suggestions /></div>} />
             <Route path="/auth/google" element={<div className='App-sub'><GoogleAuth /></div>} />
+            <Route path="/reset-password" element={<div className='App-sub'><ResetPassword /></div>} />
+            <Route path="/reset-password/:token" element={<div className='App-sub'><ResetPasswordForm /></div>} />
             <Route path="*" element={<h1>{t('error')}</h1>} />
           </Routes>
         
