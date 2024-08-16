@@ -6,7 +6,9 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "client": "cd client && npm start",
     "server": "cd server && npm start",
-    "dev": "concurrently \"npm run server\" \"npm run client\""
+    "dev": "concurrently \"npm run server\" \"npm run client\"",
+    "dev-prod": "concurrently \"cd server && npm start\" \"cd client && npm run build\""
+
   },
   "author": "",
   "license": "ISC",
