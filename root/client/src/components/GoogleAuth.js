@@ -7,7 +7,7 @@ function GoogleAuth() {
 
   const handleGoogleLogin = () => {
     // Redirect the user to Google OAuth URL
-    window.location.href = 'http://localhost:1234/api/auth/google';
+    window.location.href = 'https://advanced-web-project.onrender.com/api/auth/google';
   };
 
   const checkToken = () => { // checks if this site has a token in the URL

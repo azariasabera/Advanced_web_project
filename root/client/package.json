@@ -47,6 +47,6 @@
       "last 1 safari version"
     ]
   },
-  "proxy": "https://advanced-web-project.onrender.com/"
+  "proxy": "http://localhost:1234"
 }
 
