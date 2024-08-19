@@ -31,9 +31,21 @@ function ChatWindow({ chat, user }) {
                 console.error('Error fetching messages:', error);
             }
         };
-
+    
+        // Fetch messages immediately
         fetchMessages();
-    }, [user.email, chat.email]);
+    
+        // Set up the interval to fetch messages every 5 seconds (5000 ms)
+        const intervalId = setInterval(fetchMessages, 5000);
+    
+        // Below cleans up the interval on 1) component unmount or 2) when dependencies change
+        // Mount means when the component first appears on the DOM (when the component is displayed)
+        // Unmount means when the component is removed from the DOM (when the component is hidden) it 
+        // could be because the user navigated to another page or the component was removed from the DOM
+
+        return () => clearInterval(intervalId);
+    
+    }, [user.email, chat.email]);    
 
     const handleSendMessage = async () => {
         if (newMessage.trim() === '') return;
