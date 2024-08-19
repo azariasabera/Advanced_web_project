@@ -40,7 +40,7 @@ function Header() {
   useEffect(() => {
     const getProfilePicture = async () => {
       try {
-        const response = await fetch('/api/user/image', {
+        const response = await fetch('https://advanced-web-project.onrender.com/api/user/image', {
           method: 'GET',
           headers: {
             'Authorization': `Bearer ${localStorage.getItem('auth_token')}`,

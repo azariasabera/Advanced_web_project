@@ -20,7 +20,7 @@ function Chat() {
     useEffect(() => { // gathered all fetches to avoid async issues
         const fetchUserData = async () => { // fetches the current user's data
             try {
-                const response = await fetch('/api/user', {
+                const response = await fetch('https://advanced-web-project.onrender.com/api/user', {
                     method: 'GET',
                     headers: {
                         'Authorization': `Bearer ${localStorage.getItem('auth_token')}`
@@ -38,7 +38,7 @@ function Chat() {
 
         const fetchUsersData = async (currentUser) => { // fetches all users except the current user
             try {
-                const response = await fetch('/api/all-users', {
+                const response = await fetch('https://advanced-web-project.onrender.com/api/all-users', {
                     method: 'GET',
                     headers: {
                         'Authorization': `Bearer ${localStorage.getItem('auth_token')}`

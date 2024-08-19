@@ -14,7 +14,7 @@ function Register() {
 
         let formData = new FormData(e.target);
 
-        const response = await fetch('/api/user/register', {
+        const response = await fetch('https://advanced-web-project.onrender.com/api/user/register', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',

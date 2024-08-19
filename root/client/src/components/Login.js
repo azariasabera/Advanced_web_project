@@ -26,7 +26,7 @@ function Login() {
 
     let formData = new FormData(e.target);
 
-    const response = await fetch('/api/user/login', {
+    const response = await fetch('https://advanced-web-project.onrender.com/api/user/login', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

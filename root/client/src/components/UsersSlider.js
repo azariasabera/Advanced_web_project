@@ -16,7 +16,7 @@ function UsersSlider({ users }) {
   useEffect(() => { // To get the like status of each user
     const fetchLikedUsers = async () => {
       try {
-        const response = await fetch('/api/user/like', {
+        const response = await fetch('https://advanced-web-project.onrender.com/api/user/like', {
           method: 'GET',
           headers: {
             'Authorization': `Bearer ${localStorage.getItem('auth_token')}`
@@ -45,7 +45,7 @@ function UsersSlider({ users }) {
     setUnlikedUsers(updatedUnlikedUsers);
 
     try {
-      const response = await fetch('/api/user/like', { // update the ChatUser model
+      const response = await fetch('https://advanced-web-project.onrender.com/api/user/like', { // update the ChatUser model
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

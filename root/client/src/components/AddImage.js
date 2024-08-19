@@ -10,7 +10,7 @@ function AddImage() {
     useEffect(() => {
         const checkAuth = async () => {
             try {
-                const response = await fetch('/api/user', {
+                const response = await fetch('https://advanced-web-project.onrender.com/api/user', {
                     method: 'GET',
                     headers: {
                         "Authorization": `Bearer ${localStorage.getItem('auth_token')}`
@@ -31,7 +31,7 @@ function AddImage() {
         const formData = new FormData(e.target);
 
         try {
-            const response = await fetch('/api/user/image', {
+            const response = await fetch('https://advanced-web-project.onrender.com/api/user/image', {
                 method: 'POST',
                 headers: {
                     "Authorization": `Bearer ${localStorage.getItem('auth_token')}`

@@ -18,7 +18,7 @@ function ResetPasswordForm() {
         }
 
         try {
-            const response = await fetch(`/api/user/reset-password/${token}`, {
+            const response = await fetch(`https://advanced-web-project.onrender.com/api/user/reset-password/${token}`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

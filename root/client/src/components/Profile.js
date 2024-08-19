@@ -13,7 +13,7 @@ function Profile() {
 
     useEffect(() => { // To get the user 
         const fetchProfile = async () => {
-            const response = await fetch('/api/user', {
+            const response = await fetch('https://advanced-web-project.onrender.com/api/user', {
                 method: 'GET',
                 headers: {
                     "Authorization": `Bearer ${localStorage.getItem('auth_token')}`
@@ -31,7 +31,7 @@ function Profile() {
 
     useEffect(() => { // To get the user's profile picture
         const getProfilePicture = async () => {
-            const response = await fetch('/api/user/image', {
+            const response = await fetch('https://advanced-web-project.onrender.com/api/user/image', {
                 method: 'GET',
                 headers: {
                     "Authorization": `Bearer ${localStorage.getItem('auth_token')}`
@@ -54,7 +54,7 @@ function Profile() {
         e.preventDefault();
         const formData = new FormData(e.target);
         
-        const response = await fetch('/api/user/bio', {
+        const response = await fetch('https://advanced-web-project.onrender.com/api/user/bio', {
             method: 'POST',
             headers: {
                 "Authorization": `Bearer ${localStorage.getItem('auth_token')}`,
