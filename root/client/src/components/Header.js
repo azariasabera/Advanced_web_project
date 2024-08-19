@@ -8,7 +8,7 @@ import { IconButton } from '@mui/material';
 function Header() {
   const { t, i18n } = useTranslation();
   const navigate = useNavigate();
-  const [imgUrl, setImgUrl] = useState('noprofile.png');
+  const [imgUrl, setImgUrl] = useState('/noprofile.png');
 
   const changeLanguage = (lang) => {
     i18n.changeLanguage(lang);
